@@ -5,6 +5,33 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Exercise1 {
+    public static void main(String[] args) {
+        System.out.println("Sum of n natural numbers: " + sum(3)); // sum
+        System.out.println("Sum of n even numbers: " + evenSquares(3)); // evenSquares
+        System.out.println("Fibonacci number: " + fib(43));
+        System.out.println("String contains character: " + linear("abcdefghijklmn", 'n', 13));
+
+        int[] binaryArr = {1, 2, 5, 9, 25};
+        System.out.println("BinarySearch: " + binarySearch(binaryArr, 9));
+    }
+
+    public static boolean binarySearch(int[] arr, int value) {
+        int begin = 0;
+        int mid = 0;
+        int end = arr.length - 1;
+        while (begin <= end) {
+            mid = (begin + end) / 2;
+            System.out.println(begin + " " + mid + " " + end);
+            if (arr[mid] < value)
+                begin = mid + 1;
+            else if (arr[mid] > value)
+                end = mid - 1;
+            else
+                return true;
+        }
+        return false;
+    }
+
     // 1+2+3+4+...n+1 = n(n+1)/2
     // returns the sum of the first n natural numbers
     public static int sum(int n) {
@@ -53,12 +80,12 @@ public class Exercise1 {
         if (fib_list.size() == 0) {
             fib_list.add(0);
             fib_list.add(1);
-        } else if (fib_list.size() < n+1) {
+        } else if (fib_list.size() < n + 1) {
 //            System.out.println(fib_list.get(fib_list.size()-2));
             fib_result = fib_list.get(fib_list.size() - 1) + fib_list.get(fib_list.size() - 2);
             fib_list.add(fib_result);
 //            System.out.println(fib_result);
-        } else if (fib_list.size() == n+1) {
+        } else if (fib_list.size() == n + 1) {
             return fib_list.get(n);
         }
         return fib(n);
@@ -72,14 +99,7 @@ public class Exercise1 {
         } else if (chars[l] == c) {
             return true;
         } else
-            return linear(s, c, l-1);
+            return linear(s, c, l - 1);
 //        return cut.contains(Character.toString(c));
-    }
-
-    public static void main(String[] args) {
-        System.out.println("Sum of n natural numbers: " + sum(3)); // sum
-        System.out.println("Sum of n even numbers: " + evenSquares(3)); // evenSquares
-        System.out.println("Fibonacci number: " + fib(43));
-        System.out.println("String contains character: " + linear("abcdefghijklmn", 'n',13));
     }
 }
