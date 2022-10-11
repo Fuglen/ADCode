@@ -1,4 +1,4 @@
-package dk.sdu.ad.exercises;
+package dk.sdu.ad.exercises.one;
 
 import java.util.ArrayList;
 import java.util.Arrays;

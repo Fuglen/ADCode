@@ -1,19 +1,25 @@
-package dk.sdu.ad.exercises;
+package dk.sdu.ad.exercises.two;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Exercise2 {
     public static void main(String[] args) {
         int[] myArr = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
-        System.out.println("Method 1: " + myMethod(myArr));
-        System.out.println("Method 2: " + myMethod2(myArr));
-
-        System.out.println("Stack: " + balPar("()(()()"));
+//        System.out.println("Method 1: " + myMethod(myArr));
+//        System.out.println("Method 2: " + myMethod2(myArr));
+//
+//        System.out.println("Stack: " + balPar("()(()()"));
+        CircularArray myCircularArray = new CircularArray();
+        myCircularArray.enqueue(2);
+        myCircularArray.enqueue(3);
+        myCircularArray.enqueue(6);
+        System.out.println(Arrays.toString(myCircularArray.getCircularArr()));
+        myCircularArray.dequeue();
+        myCircularArray.enqueue(99);
+        System.out.println(Arrays.toString(myCircularArray.getCircularArr()));
     }
 
-    public void queueTest(){
-        
-    }
     public static boolean balPar(String text) {
         ArrayList<String> stack = new ArrayList<String>();
         char[] chars = text.toCharArray();
