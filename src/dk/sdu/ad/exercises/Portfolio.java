@@ -1,5 +1,6 @@
 package dk.sdu.ad.exercises;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 
 public class Portfolio {
@@ -44,9 +45,9 @@ public class Portfolio {
     }
 
     // Opgave 4: Den skal finde 3 tilfældige tal der til sammen giver et tal der er tættest på "power of 2", altså 2, 4, 8, 16, 32... 512
-    public static int[] exercise4(int[] numbers){ // {23,56,22,11,65,89,3,44,87,910,45,35,98}
-
-    }
+//    public static int[] exercise4(int[] numbers){ // {23,56,22,11,65,89,3,44,87,910,45,35,98}
+//        return ;
+//    }
 
     // Opgave 6
     public static int sumDivisibleBy3(int N) {
@@ -57,6 +58,25 @@ public class Portfolio {
         }
         return N + sumDivisibleBy3(N - 1);
 
+    }
+
+    // Opgave 7
+    public static String exercise7(int power) {
+        if (power > 100000)
+            return "Illegal value";
+        String result = "No solution found";
+        int exponentIndex = 0;
+        int[] maxExponents = new int[]{5, 5, 5, 6, 7, 8, 10};
+        for (int x = 9; x > 2; x--) {
+            for (int y = maxExponents[exponentIndex]; y > 2; y--) {
+                int calculatedPower = (int) Math.pow(x, y);
+//                System.out.println(x+"^" + y + "= " + calculatedPower);
+                if (calculatedPower == power)
+                    return "The power " + power + " with the highest x is: X= " + x + " Y=" + y;
+            }
+            exponentIndex++;
+        }
+        return result;
     }
 
     // Opgave 10
@@ -78,7 +98,7 @@ public class Portfolio {
                 count++;
             else {
                 if (count > maxCount) {
-                    popular = votes[i-1];
+                    popular = votes[i - 1];
                     maxCount = count;
                 }
                 prev = votes[i];
@@ -86,9 +106,9 @@ public class Portfolio {
             }
         }
 
-        if (count > maxCount && count >= votes.length/2)
-            return votes[votes.length-1];
-        else if (maxCount > count && maxCount >= votes.length/2) {
+        if (count > maxCount && count >= votes.length / 2)
+            return votes[votes.length - 1];
+        else if (maxCount > count && maxCount >= votes.length / 2) {
             return popular;
         } else
             return -1;
@@ -100,8 +120,8 @@ public class Portfolio {
 
         System.out.println(additive("82842605"));
         System.out.println("Exercise 6: " + sumDivisibleBy3(14));
-
+        System.out.println("Exercise 7: " + exercise7(3125));
         System.out.println("Exercise 10: " + logTo(4096));
-        System.out.println("Exercise 11: " + exercise11(new int[]{7,7,3,7,5,1,6,4,7,7,1,3,2}));
+        System.out.println("Exercise 11: " + exercise11(new int[]{7, 7, 3, 7, 5, 1, 6, 4, 7, 7, 1, 3, 2}));
     }
 }
