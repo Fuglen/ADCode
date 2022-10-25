@@ -1,12 +1,10 @@
 package dk.sdu.ad.exercises;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Portfolio {
-
-    public static int es_num = 1;
-    public static int es_sum = 0;
 
     public static int exercise1(int n) {
         if (n % 2 == 0) {
@@ -18,55 +16,50 @@ public class Portfolio {
             return (n * n) + exercise1(n - 1);
     }
 
-    public static int myMethod(int N) {
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                for (int k = 0; k < N * Math.sqrt(N); k++)
-                //square root; C++: #include <math.h>
-                {
-                    x++;
-                }
-                j *= 2;
-            }
-            i += i;
-        }
-        for (int i = 0; i < N * N; i++)
-            y++;
-        return x + y;
-    }
-
-    public static boolean additive(String s) { //“82842605”
+    public static boolean additive(String s) {
         if (s.length() < 3)
             return false;
-        System.out.println(s.charAt(s.length() - 1) - 48);
         return (s.charAt(s.length() - 3) - 48) + (s.charAt(s.length() - 2) - 48) == (s.charAt(s.length() - 1) - 48) || additive(s.substring(0, s.length() - 1));
     }
 
-    // Opgave 4: Den skal finde 3 tilfældige tal der til sammen giver et tal der er tættest på "power of 2", altså 2, 4, 8, 16, 32... 512
-    public static void exercise4(int arr[], int data[], int start,
-                                  int end, int index, int r){ // {23,56,22,11,65,89,3,44,87,910,45,35,98}
-        if (index == r)
-        {
-            for (int j=0; j<r; j++)
-                System.out.print(data[j]+" ");
-            System.out.println("");
-            return;
-        }
+    public static int[] exercise4(int[] arr) {
 
-        // replace index with all possible elements. The condition
-        // "end-i+1 >= r-index" makes sure that including one element
-        // at index will make a combination with remaining elements
-        // at remaining positions
-        for (int i=start; i<=end && end-i+1 >= r-index; i++)
-        {
-            data[index] = arr[i];
-            exercise4(arr, data, i+1, end, index+1, r);
+        List<int[]> list = new ArrayList<int[]>();
+        int[] result = new int[0];
+        int smallestDiff = 99999;
+        int sum;
+        int po2;
+        int po2_floor;
+
+        for (int i = 0; i < arr.length - 2; i++) {
+            for (int j = i + 1; j < arr.length - 1; j++) {
+                for (int k = j + 1; k < arr.length; k++) {
+                    sum = arr[i] + arr[j] + arr[k];
+                    po2 = powerof2(sum);
+                    po2_floor = powerof2(sum / 2);
+                    if (po2 - sum < sum - po2_floor && po2 - sum < smallestDiff) {
+                        smallestDiff = po2 - sum;
+                        result = new int[]{arr[i], arr[j], arr[k], po2};
+                    } else if (sum - po2_floor < po2 - sum && sum - po2_floor < smallestDiff) {
+                        smallestDiff = sum - po2_floor;
+                        result = new int[]{arr[i], arr[j], arr[k], po2_floor};
+                    }
+                }
+            }
         }
+        return result;
     }
 
-    // Opgave 6
+    static int powerof2(int x) {
+        x = x - 1;
+        x |= x >> 1;
+        x |= x >> 2;
+        x |= x >> 4;
+        x |= x >> 8;
+        x |= x >> 16;
+        return x + 1;
+    }
+
     public static int sumDivisibleBy3(int N) {
         if (N % 3 > 0) {
             return sumDivisibleBy3(N - 1);
@@ -74,12 +67,10 @@ public class Portfolio {
             return 0;
         }
         return N + sumDivisibleBy3(N - 1);
-
     }
 
-    // Opgave 7
-    public static String exercise7(int power) {
-        if (power > 100000)
+    public static String exercise7(int Z) {
+        if (Z > 100000)
             return "Illegal value";
         String result = "No solution found";
         int maxX = 3;
@@ -88,17 +79,16 @@ public class Portfolio {
             for (int y = 3; y <= 10; y++) {
                 int calculatedPower = (int) Math.pow(x, y);
                 if (calculatedPower < 100000)
-                    if (calculatedPower == power)
+                    if (calculatedPower == Z)
                         if (x > maxX) {
                             maxX = x;
-                            result = "The power " + power + " with the highest x is: X= " + x + " Y=" + y;
+                            result = "The power " + Z + " with the highest x is: X=" + x + " Y=" + y;
                         }
             }
         }
         return result;
     }
 
-    // Opgave 10
     public static int logTo(int N) {
         if (N < 2)
             return 0;
@@ -106,7 +96,7 @@ public class Portfolio {
     }
 
     // Opgave 11 O(n log n) complexity
-    public static int exercise11(int[] votes) { // {7,4,3,5,3,1,6,4,5,1,7,5} {7,7,7,5,5,5,5,3,3,3,3,3,3,3}
+    public static int exercise11(int[] votes) {
         Arrays.sort(votes);
         int maxCount = 0, count = 1;
         int prev = votes[0], popular = votes[0];
@@ -133,17 +123,83 @@ public class Portfolio {
     }
 
     public static void main(String[] args) {
-        System.out.println("Exercise 1: " + exercise1(8));
-//        System.out.println(myMethod(10));
-        int arr[] = {1, 2, 3, 4, 5};
-        int r = 3;
-        int n = arr.length;
-        exercise4(arr, n));
+        System.out.println("------------------------- Exercise 1 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int some_input1 = 8;//Fill in your input
+        System.out.println("Input is: \n" + some_input1);
+        int some_result1 = exercise1(some_input1);
+        System.out.println("Result is: \n" + some_result1);
 
-        System.out.println(additive("82842605"));
-        System.out.println("Exercise 6: " + sumDivisibleBy3(14));
-        System.out.println("Exercise 7: " + exercise7(59049));
-        System.out.println("Exercise 10: " + logTo(4096));
-        System.out.println("Exercise 11: " + exercise11(new int[]{7,4,3,5,3,1,5,1,7,7,7,7,7,7}));
+        System.out.println("\n------------------------- Exercise 3 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        String some_input3 = "82842605";
+        System.out.println("Input is: \n" + some_input3);
+        boolean some_result3 = additive(some_input3);
+        System.out.println("Result is: \n" + some_result3);
+
+        System.out.println("\n------------------------- Exercise 4 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int[] some_input4 = {23, 56, 22, 11, 65, 89, 3, 44, 87, 910, 45, 35, 98};
+        System.out.println("Input is: \n" + Arrays.toString(some_input4));
+        int[] some_result4 = exercise4(some_input4);
+        System.out.println("Result is: \n" + Arrays.toString(some_result4));
+
+        System.out.println("\n------------------------- Exercise 6 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int some_input6 = 12;
+        System.out.println("Input is: \n" + some_input6);
+        int some_result6 = sumDivisibleBy3(some_input6);
+        System.out.println("Result is: \n" + some_result6);
+
+        System.out.println("\n---- Test 2 ----");
+        int some_input62 = 14;
+        System.out.println("Input is: \n" + some_input62);
+        int some_result62 = sumDivisibleBy3(some_input62);
+        System.out.println("Result is: \n" + some_result62);
+
+        System.out.println("\n------------------------- Exercise 7 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int some_input7 = 6561;
+        System.out.println("Input is: \n" + some_input7);
+        String some_result7 = exercise7(some_input7);
+        System.out.println("Result is: \n" + some_result7);
+
+        System.out.println("\n---- Test 2 ----");
+        int some_input72 = 3125;
+        System.out.println("Input is: \n" + some_input72);
+        String some_result72 = exercise7(some_input72);
+        System.out.println("Result is: \n" + some_result72);
+
+        System.out.println("\n---- Test 3 ----");
+        int some_input73 = 1337;
+        System.out.println("Input is: \n" + some_input73);
+        String some_result73 = exercise7(some_input73);
+        System.out.println("Result is: \n" + some_result73);
+
+        System.out.println("\n------------------------- Exercise 10 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int some_input10 = 32;
+        System.out.println("Input is: \n" + some_input10);
+        int some_result10 = logTo(some_input10);
+        System.out.println("Result is: \n" + some_result10);
+
+        System.out.println("\n---- Test 2 ----");
+        int some_input102 = 4096;
+        System.out.println("Input is: \n" + some_input102);
+        int some_result102 = logTo(some_input102);
+        System.out.println("Result is: \n" + some_result102);
+
+        System.out.println("\n------------------------- Exercise 11 -------------------------\n");
+        System.out.println("---- Test 1 ----");
+        int[] some_input11 = {7, 4, 3, 5, 3, 1, 6, 4, 5, 1, 7, 5};
+        System.out.println("Input is: \n" + Arrays.toString(some_input11));
+        int some_result11 = exercise11(some_input11);
+        System.out.println("Result is: \n" + some_result11);
+
+        System.out.println("\n---- Test 2 ----");
+        int[] some_input112 = {7, 2, 2, 2, 3, 2, 6, 4, 2, 1, 2, 5, 2, 2};
+        System.out.println("Input is: \n" + Arrays.toString(some_input112));
+        int some_result112 = exercise11(some_input112);
+        System.out.println("Result is: \n" + some_result112);
     }
 }
