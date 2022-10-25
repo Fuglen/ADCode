@@ -45,9 +45,26 @@ public class Portfolio {
     }
 
     // Opgave 4: Den skal finde 3 tilfældige tal der til sammen giver et tal der er tættest på "power of 2", altså 2, 4, 8, 16, 32... 512
-//    public static int[] exercise4(int[] numbers){ // {23,56,22,11,65,89,3,44,87,910,45,35,98}
-//        return ;
-//    }
+    public static void exercise4(int arr[], int data[], int start,
+                                  int end, int index, int r){ // {23,56,22,11,65,89,3,44,87,910,45,35,98}
+        if (index == r)
+        {
+            for (int j=0; j<r; j++)
+                System.out.print(data[j]+" ");
+            System.out.println("");
+            return;
+        }
+
+        // replace index with all possible elements. The condition
+        // "end-i+1 >= r-index" makes sure that including one element
+        // at index will make a combination with remaining elements
+        // at remaining positions
+        for (int i=start; i<=end && end-i+1 >= r-index; i++)
+        {
+            data[index] = arr[i];
+            exercise4(arr, data, i+1, end, index+1, r);
+        }
+    }
 
     // Opgave 6
     public static int sumDivisibleBy3(int N) {
@@ -65,16 +82,18 @@ public class Portfolio {
         if (power > 100000)
             return "Illegal value";
         String result = "No solution found";
-        int exponentIndex = 0;
-        int[] maxExponents = new int[]{5, 5, 5, 6, 7, 8, 10};
-        for (int x = 9; x > 2; x--) {
-            for (int y = maxExponents[exponentIndex]; y > 2; y--) {
+        int maxX = 3;
+
+        for (int x = 3; x <= 46; x++) {
+            for (int y = 3; y <= 10; y++) {
                 int calculatedPower = (int) Math.pow(x, y);
-//                System.out.println(x+"^" + y + "= " + calculatedPower);
-                if (calculatedPower == power)
-                    return "The power " + power + " with the highest x is: X= " + x + " Y=" + y;
+                if (calculatedPower < 100000)
+                    if (calculatedPower == power)
+                        if (x > maxX) {
+                            maxX = x;
+                            result = "The power " + power + " with the highest x is: X= " + x + " Y=" + y;
+                        }
             }
-            exponentIndex++;
         }
         return result;
     }
@@ -87,10 +106,9 @@ public class Portfolio {
     }
 
     // Opgave 11 O(n log n) complexity
-    public static int exercise11(int[] votes) { // {7,4,3,5,3,1,6,4,5,1,7,5}
+    public static int exercise11(int[] votes) { // {7,4,3,5,3,1,6,4,5,1,7,5} {7,7,7,5,5,5,5,3,3,3,3,3,3,3}
         Arrays.sort(votes);
-
-        int maxCount = 1, count = 1;
+        int maxCount = 0, count = 1;
         int prev = votes[0], popular = votes[0];
 
         for (int i = 1; i < votes.length; i++) {
@@ -106,9 +124,9 @@ public class Portfolio {
             }
         }
 
-        if (count > maxCount && count >= votes.length / 2)
+        if (count > maxCount && count > votes.length / 2)
             return votes[votes.length - 1];
-        else if (maxCount > count && maxCount >= votes.length / 2) {
+        else if (maxCount > count && maxCount > votes.length / 2) {
             return popular;
         } else
             return -1;
@@ -117,11 +135,15 @@ public class Portfolio {
     public static void main(String[] args) {
         System.out.println("Exercise 1: " + exercise1(8));
 //        System.out.println(myMethod(10));
+        int arr[] = {1, 2, 3, 4, 5};
+        int r = 3;
+        int n = arr.length;
+        exercise4(arr, n));
 
         System.out.println(additive("82842605"));
         System.out.println("Exercise 6: " + sumDivisibleBy3(14));
-        System.out.println("Exercise 7: " + exercise7(3125));
+        System.out.println("Exercise 7: " + exercise7(59049));
         System.out.println("Exercise 10: " + logTo(4096));
-        System.out.println("Exercise 11: " + exercise11(new int[]{7, 7, 3, 7, 5, 1, 6, 4, 7, 7, 1, 3, 2}));
+        System.out.println("Exercise 11: " + exercise11(new int[]{7,4,3,5,3,1,5,1,7,7,7,7,7,7}));
     }
 }
