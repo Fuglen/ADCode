@@ -201,5 +201,7 @@ public class Portfolio {
         System.out.println("Input is: \n" + Arrays.toString(some_input112));
         int some_result112 = exercise11(some_input112);
         System.out.println("Result is: \n" + some_result112);
+
+        // Test
     }
 }
