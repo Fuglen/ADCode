@@ -7,13 +7,12 @@ import java.util.List;
 public class Portfolio {
 
     public static int exercise1(int n) {
+        if (n < 0)
+            return 0;
         if (n % 2 == 0) {
-            if (n == 0) {
-                return 0;
-            }
             return exercise1(n - 1);
-        } else
-            return (n * n) + exercise1(n - 1);
+        }
+        return (n * n) + exercise1(n - 2);
     }
 
     public static boolean additive(String s) {
@@ -66,7 +65,7 @@ public class Portfolio {
         } else if (N == 0) {
             return 0;
         }
-        return N + sumDivisibleBy3(N - 1);
+        return N + sumDivisibleBy3(N - 3);
     }
 
     public static String exercise7(int Z) {
@@ -76,15 +75,15 @@ public class Portfolio {
         int maxX = 3;
 
         for (int x = 3; x <= 46; x++) {
-            for (int y = 3; y <= 10; y++) {
-                int calculatedPower = (int) Math.pow(x, y);
-                if (calculatedPower < 100000)
-                    if (calculatedPower == Z)
-                        if (x > maxX) {
-                            maxX = x;
-                            result = "The power " + Z + " with the highest x is: X=" + x + " Y=" + y;
-                        }
-            }
+            double y = (Math.log(Z) / Math.log(x));
+            double power = 1 / y;
+            int x_new = (int) Math.pow(Z, power);
+            int calculatedPower = (int) Math.pow(x_new, Math.round(y));
+            if (calculatedPower == Z)
+                if (x_new > maxX) {
+                    maxX = x_new;
+                    result = "The power " + Z + " with the highest x is: X=" + x_new + " Y=" + Math.round(y);
+                }
         }
         return result;
     }
