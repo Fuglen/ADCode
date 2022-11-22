@@ -74,9 +74,11 @@ public class Portfolio {
         String result = "No solution found";
         int maxX = 3;
 
-        for (int x = 3; x <= 46; x++) {
-            double y = (Math.log(Z) / Math.log(x));
-            double power = 1 / y;
+        for (int x = 3; x <= (Z^1/3); x++) {
+            double y=3;
+            if (Math.log(Z) / Math.log(x) > 2)
+                 y = (Math.log(Z) / Math.log(x));
+            float power = (float) (1 / y);
             int x_new = (int) Math.pow(Z, power);
             int calculatedPower = (int) Math.pow(x_new, Math.round(y));
             if (calculatedPower == Z)
@@ -170,7 +172,7 @@ public class Portfolio {
         System.out.println("Result is: \n" + some_result72);
 
         System.out.println("\n---- Test 3 ----");
-        int some_input73 = 1337;
+        int some_input73 = 64;
         System.out.println("Input is: \n" + some_input73);
         String some_result73 = exercise7(some_input73);
         System.out.println("Result is: \n" + some_result73);
