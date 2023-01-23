@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Exercise1 {
     public static void main(String[] args) {
-        System.out.println("Sum of n natural numbers: " + sum(3)); // sum
+        System.out.println("Sum of n natural numbers: " + sum(5)); // sum
         System.out.println("Sum of n even numbers: " + evenSquares(3)); // evenSquares
         System.out.println("Fibonacci number: " + fib(43));
         System.out.println("String contains character: " + linear("abcdefghijklmn", 'n', 13));

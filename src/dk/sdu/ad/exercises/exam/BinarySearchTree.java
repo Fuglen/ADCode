@@ -261,6 +261,12 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>>
         // Test program
     public static void main( String [ ] args ) throws UnderflowException {
         BinarySearchTree<Integer> t = new BinarySearchTree<>( );
+        int[] arr = new int[]{11, 2, 13, 1, 9, 57, 3, 25, 90, 18};
+
+        for(int k : arr) {
+            t.insert(k);
+        }
+
         final int NUMS = 4000;
         final int GAP  =   37;
 
