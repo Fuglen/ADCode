@@ -1,6 +1,4 @@
-package dk.sdu.ad.exercises.exam;
-
-// BinarySearchTree class
+package dk.sdu.ad.exercises;// BinarySearchTree class
 //
 // CONSTRUCTION: with no initializer
 //
@@ -22,11 +20,11 @@ package dk.sdu.ad.exercises.exam;
  *
  * @author Mark Allen Weiss
  */
-public class BinarySearchTreeTest<AnyType extends Comparable<? super AnyType>> {
+public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
     /**
      * Construct the tree.
      */
-    public BinarySearchTreeTest() {
+    public BinarySearchTree() {
         root = null;
     }
 
@@ -256,93 +254,29 @@ public class BinarySearchTreeTest<AnyType extends Comparable<? super AnyType>> {
     // Test program
     public static void main(String[] args) {
         BinarySearchTree<Integer> t = new BinarySearchTree<>();
-        int[] arr = new int[]{11,2,13,1,9,57,3,25,90,17};
+        final int NUMS = 4000;
+        final int GAP = 37;
 
-        for (int k : arr) {
-            t.insert(k);
-        }
-//        t.printTree();
-//        System.out.println(t.findMax());
-//        System.out.println();
-//        t.preOrder();
-//
-//        System.out.println(t.minimalHeight());
-//        t.postOrder();
-//        System.out.println(t.internalPathLength());
-//        t.internalPathLenght();
+        System.out.println("Checking... (no more output means success)");
 
-    }
+        for (int i = GAP; i != 0; i = (i + GAP) % NUMS)
+            t.insert(i);
 
-    /**
-     * EXCERCISES
-     */
+        for (int i = 1; i < NUMS; i += 2)
+            t.remove(i);
 
-    // MINIMAL HEIGHT//
-    private int size(BinaryNode<AnyType> t) {
-        if (t == null) {
-            return 0;
-        } else {
-            return 1 + size(t.left) + size(t.right);
+        if (NUMS < 40)
+            t.printTree();
+        if (t.findMin() != 2 || t.findMax() != NUMS - 2)
+            System.out.println("FindMin or FindMax error!");
+
+        for (int i = 2; i < NUMS; i += 2)
+            if (!t.contains(i))
+                System.out.println("Find error1!");
+
+        for (int i = 1; i < NUMS; i += 2) {
+            if (t.contains(i))
+                System.out.println("Find error2!");
         }
     }
-
-    public boolean minimalHeight() {
-        int minimalHeight = (int) (Math.log(size(root) + 1) / Math.log(2));
-        return (int) (Math.pow(2, minimalHeight) - 1) == size(root);
-    }
-
-
-
-    //INTERNAL PATH LENGHT
-    private int ipl(BinaryNode<AnyType> t, int depth) {
-        if (t == null) {
-            return 0;
-        }
-        if (t.left == null && t.right == null) {
-            return 0;
-        } else {
-            return depth + ipl(t.left, depth + 1) + ipl(t.right, depth + 1);
-        }
-    }
-
-    public int internalPathLength() {
-        return ipl(root, 0);
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-
-    private void postOrder(BinaryNode<AnyType> t) {
-        if (t == null) {
-            return;
-        }
-
-
-        postOrder(t.left);
-        postOrder(t.right);
-
-        System.out.println(t.element);
-    }
-
-    //wrapper
-    public void postOrder() {
-        postOrder(root);
-    }
-
-    //wrapper
-    public void preOrder() {
-        preOrder(root);
-    }
-
-    private void preOrder(BinaryNode<AnyType> t) {
-        if (t == null) {
-            return;
-        }
-
-        System.out.println(t.element);
-        preOrder(t.left);
-        preOrder(t.right);
-
-
-    }
-
 }

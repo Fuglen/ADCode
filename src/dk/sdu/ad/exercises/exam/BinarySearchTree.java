@@ -18,6 +18,7 @@ package dk.sdu.ad.exercises.exam;
 import dk.sdu.ad.exercises.exam.UnderflowException;
 import org.w3c.dom.Node;
 
+import java.awt.image.BandCombineOp;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -226,11 +227,12 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
      *
      * @param t the node that roots the subtree.
      */
-    private int height(BinaryNode<AnyType> t) {
-        if (t == null)
+    private int height( BinaryNode<AnyType> t )
+    {
+        if( t == null )
             return -1;
         else
-            return 1 + Math.max(height(t.left), height(t.right));
+            return 1 + Math.max( height( t.left ), height( t.right ) );
     }
 
     // Basic node stored in unbalanced binary search trees
@@ -256,6 +258,10 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
      * The tree root.
      */
     private BinaryNode<AnyType> root;
+
+    private BinaryNode getRoot() {
+        return this.root;
+    }
 
     private static int findNumberOfTwigs(BinaryNode node) {
         int twigs = 0;
@@ -320,21 +326,19 @@ public class BinarySearchTree<AnyType extends Comparable<? super AnyType>> {
     public static void main(String[] args) throws UnderflowException {
         // create a new BinarySearchTree object
         BinarySearchTree<Integer> tree = new BinarySearchTree();
-        int[] arr = new int[]{2, 6, 7, 8, 10, 22, 15, 11, 13, 12, 14, 36, 26, 24, 28, 27, 30, 29, 32, 40, 45, 48, 46, 50};
+        int[] arr = new int[]{22,10,36,8,15,26,40,6,11,24,28,45,2,7,13,27,30,48,12,14,29,32,46,50};
 
         // insert nodes into the tree
         for (int i = 0; i < arr.length; i++) {
-            BinaryNode var = new BinaryNode(arr[i]);
-
-            tree.insert(var);
+            tree.insert(arr[i]);
         }
 
         // search for a value in the tree
-        BinaryNode test = new BinaryNode(14);
-        int height = tree.height(test);
+        int height = tree.height(tree.getRoot());
         System.out.println(height);
+        System.out.println(tree.getRoot().element);
 //        tree.printTree();
-//        System.out.println(findNumberOfTwigs(test));
+        System.out.println(findNumberOfTwigs(tree.getRoot()));
 
     }
 }

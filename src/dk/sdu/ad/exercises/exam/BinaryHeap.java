@@ -13,6 +13,8 @@ package dk.sdu.ad.exercises.exam;
 // ******************ERRORS********************************
 // Throws UnderflowException as appropriate
 
+import java.util.Arrays;
+
 /**
  * Implements a binary heap.
  * Note that all "matching" is based on the compareTo method.
@@ -159,16 +161,31 @@ public class BinaryHeap<AnyType extends Comparable<? super AnyType>>
         array[ hole ] = tmp;
     }
 
+    public AnyType showXthElement(int x)
+    {
+        AnyType[] arr = (AnyType[]) new Comparable[currentSize-1];
+        for (int i = 1; i < currentSize;i++)
+            arr[i-1] = array[i];
+        Arrays.sort(arr);
+        return arr[x-1];
+    }
+
     // Test program
     public static void main( String [ ] args ) throws UnderflowException {
         int numItems = 100;
         BinaryHeap<Integer> h = new BinaryHeap<>( );
-        int i;
-
-        for( i = 37; i != 0; i = ( i + 37 ) % numItems )
-            h.insert( i );
-        for( i = 1; i < numItems; i++ )
-            if( h.deleteMin( ) != i )
-                System.out.println( "Oops! " + i );
+//        for (int i = 10; i < 1000; i++)
+//            h.insert(i);
+        int[] numbers = new int[]{0, 13, 21, 16, 24, 31, 19, 68, 65, 26, 32};
+        for (int i = 1; i < numbers.length; i++)
+            h.insert(numbers[i]);
+        System.out.println("Minimum: " + h.findMin());
+        System.out.println(h.showXthElement(3));
+//        int i;
+//        for( i = 37; i != 0; i = ( i + 37 ) % numItems )
+//            h.insert( i );
+//        for( i = 1; i < numItems; i++ )
+//            if( h.deleteMin( ) != i )
+//                System.out.println( "Oops! " + i );
     }
 }
